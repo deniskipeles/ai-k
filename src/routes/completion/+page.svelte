@@ -1,7 +1,7 @@
 <script>
 	import { useCompletion } from 'ai/svelte'
 
-	const { completion, input, handleSubmit, data } = useCompletion();
+	const { completion, input, handleSubmit, data } = useCompletion({api:"/api/completion/google"});
 </script>
 
 <svelte:head>
