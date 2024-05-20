@@ -4,9 +4,32 @@ import type { RequestHandler } from './$types';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { GoogleGenerativeAIStream, StreamingTextResponse } from 'ai';
 
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+
+const ratelimit =
+	process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN
+		? new Ratelimit({
+				redis: new Redis({
+					url: process.env.KV_REST_API_URL,
+					token: process.env.KV_REST_API_TOKEN,
+				}),
+				limiter: Ratelimit.slidingWindow(10, "5 m"),
+				analytics: true,
+		  })
+		: false;
+
 const genAI = new GoogleGenerativeAI(env.GOOGLE_API_KEY ?? '');
 
 export const POST = (async ({ request }) => {
+  if (ratelimit) {
+		const ip = request.headers.get("x-real-ip") ?? "local";
+		const rl = await ratelimit.limit(ip);
+
+		if (!rl.success) {
+			return new Response("Rate limit exceeded", { status: 429 });
+		}
+	}
   // Extract the `prompt` from the body of the request
   const { prompt } = await request.json();
 

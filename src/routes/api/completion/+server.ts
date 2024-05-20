@@ -8,6 +8,21 @@ import { env } from '$env/dynamic/private';
 
 import type { RequestHandler } from './$types';
 
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+
+const ratelimit =
+	process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN
+		? new Ratelimit({
+				redis: new Redis({
+					url: process.env.KV_REST_API_URL,
+					token: process.env.KV_REST_API_TOKEN,
+				}),
+				limiter: Ratelimit.slidingWindow(10, "5 m"),
+				analytics: true,
+		  })
+		: false;
+
 // Create an OpenAI Provider instance
 const openai = createOpenAI({
   apiKey: env.OPENAI_API_KEY ?? '',
@@ -15,6 +30,14 @@ const openai = createOpenAI({
 });
 
 export const POST = (async ({ request }) => {
+  if (ratelimit) {
+		const ip = request.headers.get("x-real-ip") ?? "local";
+		const rl = await ratelimit.limit(ip);
+
+		if (!rl.success) {
+			return new Response("Rate limit exceeded", { status: 429 });
+		}
+	}
   // Extract the `prompt` from the body of the request
   const { prompt } = await request.json();
 
