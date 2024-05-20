@@ -4,11 +4,11 @@ import type { RequestHandler } from './$types';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { GoogleGenerativeAIStream, StreamingTextResponse } from 'ai';
 
-const genAI = new GoogleGenerativeAI(env.GOOGLE_API_KEY || '');
+const genAI = new GoogleGenerativeAI(env.GOOGLE_API_KEY ?? '');
 
 export const POST = (async ({ request }) => {
   // Extract the `prompt` from the body of the request
-  const { prompt } = await req.json();
+  const { prompt } = await request.json();
 
   // Ask Google Generative AI for a streaming completion given the prompt
   const response = await genAI
