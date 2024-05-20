@@ -12,6 +12,8 @@
   "dependencies": {
     "@ai-sdk/openai": "latest",
     "@google/generative-ai": "latest",
+    "@upstash/ratelimit": "^1.0.1",
+		"@upstash/redis": "^1.29.0",
     "ai": "latest",
     "openai": "4.47.1"
   },
