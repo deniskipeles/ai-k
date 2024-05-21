@@ -34,7 +34,7 @@ export const POST = (async ({ request }) => {
   const { prompt,context } = await request.json();
 
   // Ask Google Generative AI for a streaming completion given the prompt
-  const text= context ? `Prompt::: ${prompt}\nText::: ${context}` : prompt;
+  const text= (context && context.length>0) ? `Prompt::: ${prompt}\nText::: ${context}` : prompt;
   const response = await genAI
     .getGenerativeModel({ model: 'gemini-pro' })
     .generateContentStream({
