@@ -23,7 +23,8 @@ const genAI = new GoogleGenerativeAI(env.GOOGLE_API_KEY ?? '');
 
 export const POST = (async ({ request }) => {
   if (ratelimit) {
-		const ip  = request.headers.get('x-forwarded-for') ?? request.headers.get('host') ?? request?.socket?.remoteAddress ?? request.headers.get("x-real-ip") ?? "local";
+		let ip  = request.headers.get('x-forwarded-for') ?? request.headers.get('host') ?? request?.socket?.remoteAddress ?? request.headers.get("x-real-ip") ?? "local";
+		ip = (ip?.split(":"))[0]
     
 		const rl = await ratelimit.limit(ip);
 
