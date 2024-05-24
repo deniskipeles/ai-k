@@ -2,7 +2,7 @@
 	//import { useChat } from 'ai/svelte'
 
 	//const { input, handleSubmit, messages } = useChat()
-	import MagicTextareaSvelte from "$lib/MagicTextarea.svelte";
+	import MagicTextarea from "$lib/MagicTextarea.svelte";
 	let value=""
   let options = {
     textareaClass: "my-textarea-class",
