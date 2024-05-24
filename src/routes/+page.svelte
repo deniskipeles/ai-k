@@ -1,16 +1,30 @@
 <script>
-	import { useChat } from 'ai/svelte'
+	//import { useChat } from 'ai/svelte'
 
-	const { input, handleSubmit, messages } = useChat()
+	//const { input, handleSubmit, messages } = useChat()
+	import MagicTextareaSvelte from "$lib/MagicTextarea.svelte";
+	let svalue=""
+  let options = {
+    textareaClass: "my-textarea-class",
+    inputClass: "my-input-class",
+    submitButtonClass: "my-submit-button-class",
+    divContainerClass: "my-container-class",
+    divHeaderClass: "my-header-class",
+    divFooterClass: "my-footer-class",
+    url: "/api/completion"
+  };
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>MagicTextarea</title>
+	<meta name="description" content="svelte magic textarea" />
 </svelte:head>
 
 <section>
-	<h1>useChat</h1>
+	<h1>MagicTextarea in Action</h1>
+	<h4>MagicTextarea was inspired by react magic-spell</h4>
+	<MagicTextarea bind:value {...options} />
+	<!--
 	<ul>
 		{#each $messages as message}
 			<li>{message.role}: {message.content}</li>
@@ -20,6 +34,7 @@
 		<input bind:value={$input} />
 		<button type="submit">Send</button>
 	</form>
+	-->
 </section>
 
 <style>
