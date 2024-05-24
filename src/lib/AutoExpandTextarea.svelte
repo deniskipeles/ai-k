@@ -2,9 +2,8 @@
 <script>
   import { onMount } from "svelte";
 
-  let height = window.innerHeight;
   export let value = "";
-  export let maxHeight = height;
+  export let maxHeight = 500;
 
   let inputElem;
   let updateTimeoutId;
@@ -33,6 +32,7 @@
   }
 
   onMount(() => {
+    maxHeight=window.innerHeight;
     updateInputHeight();
 
     return () => clearTimeout(updateTimeoutId);
