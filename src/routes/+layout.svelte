@@ -11,7 +11,7 @@
 		};
 	};
 	onMount(() => {
-	  loadEruda()
+	  //loadEruda()
 	})
 </script>
 
@@ -21,7 +21,7 @@
 	</main>
 
 	<footer>
-		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
+		<p>get source at <a href="https://github.com/deniskipeles/ai-k/tree/15c49c9a258c0be5fc568264b64857f5bd0cc076/src/lib">github</a> or <a href="https://svelte.dev/repl/85fd6ad094b940a3bc7d40c98cb5b10a?version=4.2.17">repl</a> to use</p>
 	</footer>
 </div>
 
