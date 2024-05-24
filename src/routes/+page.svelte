@@ -3,7 +3,7 @@
 
 	//const { input, handleSubmit, messages } = useChat()
 	import MagicTextareaSvelte from "$lib/MagicTextarea.svelte";
-	let svalue=""
+	let value=""
   let options = {
     textareaClass: "my-textarea-class",
     inputClass: "my-input-class",
