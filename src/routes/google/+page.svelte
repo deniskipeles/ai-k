@@ -1,7 +1,7 @@
 <script>
-	//import { useChat } from 'ai/svelte'
+	import { useCompletion } from 'ai/svelte'
 
-	//const { input, handleSubmit, messages } = useChat()
+  const { completion, input, isLoading, handleSubmit, data } = useCompletion({api:"/api/completion/google"});
 	import MagicTextarea from "$lib/MagicTextarea.svelte";
 	let value=""
   let options = {
@@ -11,7 +11,6 @@
     divContainerClass: "my-container-class",
     divHeaderClass: "my-header-class",
     divFooterClass: "my-footer-class",
-    url: "/api/completion/google"
   };
 </script>
 
@@ -23,7 +22,10 @@
 <section>
 	<h1>MagicTextarea in Action(using google gemini)</h1>
 	<h4>MagicTextarea was inspired by react magic-spell</h4>
-	<MagicTextarea bind:value {...options} />
+	<!--
+	this MagicTextarea uses svelte ai sdk
+	-->
+	<MagicTextarea bind:value={$completion} bind:inputText={$input} bind:isLoading={$isLoading} {handleSubmit} {...options} />
 </section>
 
 <style>

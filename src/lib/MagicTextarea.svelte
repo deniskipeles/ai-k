@@ -4,6 +4,9 @@
   import AutoExpandTextarea from "./AutoExpandTextarea.svelte";
 
   export let value = '';
+  export let inputText = '';
+  export let isLoading = false;
+  export let handleSubmit = undefined;
 	export let textareaClass = '';
 	export let inputClass = '';
 	export let submitButtonClass = '';
@@ -14,9 +17,8 @@
   export let url = 'https://aik-bice.vercel.app/api/completion'; // Replace with your AI streaming API URL
 
   let res = "";
-  let isLoading = false;
   let completion = '';
-  let inputText = '';
+  
 
   const data = {
     "messages": [],
@@ -53,7 +55,7 @@
     return val;
   }
 
-  async function handleSubmit() {
+  async function handleSubmitFetch() {
     value = "";
     isLoading = true;
 
@@ -150,7 +152,7 @@
         aria-label="Submit"
         type="button"
         class="submit-button {submitButtonClass}"
-        on:click={handleSubmit}
+        on:click={()=>handleSubmit ? handleSubmit() : handleSubmitFetch()}
       >
         {#if isLoading}
           <div class="loader"></div>
