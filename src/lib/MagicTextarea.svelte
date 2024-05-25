@@ -152,7 +152,7 @@
         aria-label="Submit"
         type="button"
         class="submit-button {submitButtonClass}"
-        on:click={handleSubmit ? handleSubmit : handleSubmitFetch}
+        on:click={()=>typeof handleSubmit != "undefined" ? handleSubmit() : handleSubmitFetch()}
       >
         {#if isLoading}
           <div class="loader"></div>
