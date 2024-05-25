@@ -11,7 +11,7 @@
 		};
 	};
 	onMount(() => {
-	  //loadEruda()
+	  loadEruda()
 	})
 </script>
 
