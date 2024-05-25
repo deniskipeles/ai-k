@@ -12,6 +12,8 @@
     divHeaderClass: "my-header-class",
     divFooterClass: "my-footer-class",
   };
+  $:if($completion) value = $completion
+  //let isLoading = $isLoading
 </script>
 
 <svelte:head>
@@ -25,7 +27,7 @@
 	<!--
 	this MagicTextarea uses svelte ai sdk
 	-->
-	<MagicTextarea bind:value={$completion} bind:inputText={$input} bind:isLoading={$isLoading} {handleSubmit} {...options} />
+	<MagicTextarea bind:value bind:inputText={$input} isLoading={$isLoading} {handleSubmit} {...options} />
 </section>
 
 <style>
