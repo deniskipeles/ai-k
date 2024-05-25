@@ -55,7 +55,7 @@
     return val;
   }
 
-  async function handleSubmitFetch() {
+  async function handleSubmitFetch(e) {
     value = "";
     isLoading = true;
 
@@ -152,7 +152,7 @@
         aria-label="Submit"
         type="button"
         class="submit-button {submitButtonClass}"
-        on:click={()=>typeof handleSubmit != "undefined" ? handleSubmit() : handleSubmitFetch()}
+        on:click={(e)=>typeof handleSubmit != "undefined" ? handleSubmit(e) : handleSubmitFetch(e)}
       >
         {#if isLoading}
           <div class="loader"></div>
