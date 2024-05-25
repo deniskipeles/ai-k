@@ -16,11 +16,14 @@
 </script>
 
 <div class="app">
-	<main>
-	  <p>
-	    <a href="/">Groq(llama 3 8b)</a>
+  <header>
+    <p>
+	    try with <a href="/">Groq(llama 3 8b)</a> or
 	    <a href="/google">Gemini pro</a>
 	   </p>
+  </header>
+  
+	<main>
 		<slot />
 	</main>
 
@@ -68,6 +71,10 @@
 	}
 
 	footer a {
+		font-weight: bold;
+	}
+	
+	header a {
 		font-weight: bold;
 	}
 
