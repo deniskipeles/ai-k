@@ -109,7 +109,7 @@
 
   let markedCdn = "";
   let preview = false;
-  const handleSubmitFetch=(e)=>{
+  const handleSubmitCustom=(e)=>{
     value=""
     handleSubmit(e)
   }
