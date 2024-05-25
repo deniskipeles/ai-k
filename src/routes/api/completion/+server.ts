@@ -18,7 +18,7 @@ const ratelimit =
 					url: process.env.KV_REST_API_URL,
 					token: process.env.KV_REST_API_TOKEN,
 				}),
-				limiter: Ratelimit.slidingWindow(10, "5 m"),
+				limiter: Ratelimit.slidingWindow(50, "5 m"),
 				analytics: true,
 		  })
 		: false;
@@ -34,7 +34,7 @@ export const POST = (async ({ request }) => {
 		let ip  = request.headers.get('referer') ?? request.headers.get('origin');
 		ip = ip ? new URL(ip).hostname : (request.headers.get("x-real-ip") ?? "local");
 		
-		const rl = await ratelimit.limit(ip);
+		const rl = await ratelimit.limit(`${ip}-groq`);
 
 		if (!rl.success) {
 			return new Response("Rate limit exceeded", { status: 429 });
@@ -46,7 +46,7 @@ export const POST = (async ({ request }) => {
   // Ask OpenAI for a streaming chat completion given the prompt
   const text= (context && context.length>0) ? `Prompt::: ${prompt}\nText::: ${context}` : prompt;
   const result = await streamText({
-    model: openai('llama3-70b-8192'),
+    model: openai('llama3-8b-8192'),
     prompt,
   });
 

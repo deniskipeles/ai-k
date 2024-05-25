@@ -14,7 +14,7 @@ const ratelimit =
 					url: process.env.KV_REST_API_URL,
 					token: process.env.KV_REST_API_TOKEN,
 				}),
-				limiter: Ratelimit.slidingWindow(10, "5 m"),
+				limiter: Ratelimit.slidingWindow(50, "5 m"),
 				analytics: true,
 		  })
 		: false;
@@ -26,7 +26,7 @@ export const POST = (async ({ request }) => {
 		let ip  = request.headers.get('referer') ?? request.headers.get('origin');
 		ip = ip ? new URL(ip).hostname : (request.headers.get("x-real-ip") ?? "local");
     
-		const rl = await ratelimit.limit(ip);
+		const rl = await ratelimit.limit(`${ip}-gemini`);
 
 		if (!rl.success) {
 			return new Response("Rate limit exceeded", { status: 429 });

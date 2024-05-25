@@ -17,6 +17,10 @@
 
 <div class="app">
 	<main>
+	  <p>
+	    <a href="/">Groq(llama 3 8b)</a>
+	    <a href="/google">Gemini pro</a>
+	   </p>
 		<slot />
 	</main>
 
@@ -24,6 +28,18 @@
 		<p>get source at <a href="https://github.com/deniskipeles/ai-k/tree/15c49c9a258c0be5fc568264b64857f5bd0cc076/src/lib">github</a> or <a href="https://svelte.dev/repl/85fd6ad094b940a3bc7d40c98cb5b10a?version=4.2.17">repl</a> to use</p>
 	</footer>
 </div>
+
+<svelte:head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7H1P1B0WQE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7H1P1B0WQE');
+</script>
+</svelte:head>
 
 <style>
 	.app {

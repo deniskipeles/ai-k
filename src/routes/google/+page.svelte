@@ -11,30 +11,19 @@
     divContainerClass: "my-container-class",
     divHeaderClass: "my-header-class",
     divFooterClass: "my-footer-class",
-    url: "/api/completion"
+    url: "/api/completion/google"
   };
 </script>
 
 <svelte:head>
-	<title>Magic textarea groq</title>
+	<title>Magic textarea gemini</title>
 	<meta name="description" content="svelte textarea with super powers" />
 </svelte:head>
 
 <section>
-	<h1>MagicTextarea in Action(using groq)</h1>
+	<h1>MagicTextarea in Action(using google gemini)</h1>
 	<h4>MagicTextarea was inspired by react magic-spell</h4>
 	<MagicTextarea bind:value {...options} />
-	<!--
-	<ul>
-		{#each $messages as message}
-			<li>{message.role}: {message.content}</li>
-		{/each}
-	</ul>
-	<form on:submit={handleSubmit}>
-		<input bind:value={$input} />
-		<button type="submit">Send</button>
-	</form>
-	-->
 </section>
 
 <style>
