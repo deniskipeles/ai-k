@@ -1,7 +1,11 @@
 <script>
 	import { useCompletion } from 'ai/svelte'
 
-  const { completion, input, isLoading, handleSubmit, data } = useCompletion({api:"/api/completion/google"});
+  const { completion, input, isLoading, handleSubmit, data } = useCompletion({
+    api:"/api/completion/google",
+    onFinish: (prompt, completion) => $input="",
+		onError: (error) => console.log(error.message),
+  });
 	import MagicTextarea from "$lib/MagicTextarea.svelte";
 	let value=""
   let options = {

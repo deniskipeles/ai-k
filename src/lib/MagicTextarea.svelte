@@ -109,6 +109,10 @@
 
   let markedCdn = "";
   let preview = false;
+  const handleSubmitFetch=(e)=>{
+    value=""
+    handleSubmit(e)
+  }
 </script>
 
 
@@ -152,7 +156,7 @@
         aria-label="Submit"
         type="button"
         class="submit-button {submitButtonClass}"
-        on:click={(e)=>typeof handleSubmit != "undefined" ? handleSubmit(e) : handleSubmitFetch(e)}
+        on:click={(e)=>typeof handleSubmit != "undefined" ? handleSubmitCustom(e) : handleSubmitFetch(e)}
       >
         {#if isLoading}
           <div class="loader"></div>

@@ -7,7 +7,7 @@
     script.src = "//cdn.jsdelivr.net/npm/eruda"
     document.head.append(script);
 		script.onload = () => {
-      window.eruda.init();
+      //window.eruda.init();
 		};
 	};
 	onMount(() => {
