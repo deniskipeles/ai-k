@@ -44,11 +44,11 @@ export const POST = (async ({ request }) => {
   const { prompt,context } = await request.json();
 
   // Ask OpenAI for a streaming chat completion given the prompt
-  const text= (context && context.length>0) ? `Prompt::: ${prompt}\nContext::: ${context}` : prompt;
+  const text= (context && context.length>0) ? `<prompt>${prompt}</prompt>\n<context>${context}</context>` : prompt;
   const result = await streamText({
-    model: openai('llama3-70b-8192'),
+    model: openai('llama3-8b-8192'),
     system: "You are a professinal school guider. You will be given a prompt and maybe  some context as refererence. Try your best to answer the prompt, and only respond with well styled markdown such that when previewed it looks good and wrap all latex code with double dollar signs $$latex code$$ do not use other delimiters in latex. If you modify the context make sure to flesh it up. Do not include the prompt or otherwise preface your response. Do not enclose the response in quotes.",
-    prompt,
+    prompt:text,
   });
 
   // optional: use stream data

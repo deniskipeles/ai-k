@@ -44,10 +44,10 @@ export const POST = (async ({ request }) => {
   const { prompt,context } = await request.json();
 
   // Ask OpenAI for a streaming chat completion given the prompt
-  const text= (context && context.length>0) ? `Prompt::: ${prompt}\nText::: ${context}` : prompt;
+  const text= (context && context.length>0) ? `<prompt>${prompt}</prompt>\n<context>${context}</context>` : prompt;
   const result = await streamText({
     model: openai('llama3-8b-8192'),
-    prompt,
+    prompt:text,
   });
 
   // optional: use stream data
