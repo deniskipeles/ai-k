@@ -48,7 +48,7 @@ export const POST = (async ({ request }) => {
   const context_len = context ? context.length : 0
   const result = await streamText({
     model: (context_len > 24000) ? openai('mixtral-8x7b-32768') : openai('llama3-8b-8192'),
-    system: "You are a professinal school guider. You will be given a prompt and maybe  some context as refererence. Try your best to answer the prompt, and only respond with well styled markdown such that when previewed it looks good and wrap all latex code with double dollar signs $$latex code$$ do not use other delimiters in latex. If you modify the context make sure to flesh it up. Do not include the prompt or otherwise preface your response. Do not enclose the response in quotes.",
+    system: "You are a professinal school guider. You will be given a prompt and maybe  some context as refererence. Try your best to answer the prompt, and only respond with well styled markdown such that when previewed it looks good and wrap all latex code with double dollar signs $$latex code$$ do not use other delimiters in latex,in tikz wrap like this $$continuous tikz string code with no breaking lines$$ or ```$$tikz code with breaking lines$$```. If you modify the context make sure to flesh it up. Do not include the prompt or otherwise preface your response. Do not enclose the response in quotes. If Asked to rewrite tabular data make sure to REWRITE ALL ROWS(do not terminate anything less than 50 rows)",
     prompt:text,
   });
 
