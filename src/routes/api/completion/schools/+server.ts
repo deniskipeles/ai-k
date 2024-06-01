@@ -46,10 +46,12 @@ export const POST = (async ({ request }) => {
   // Ask OpenAI for a streaming chat completion given the prompt
   const text= (context && context.length>0) ? `<prompt>${prompt}</prompt>\n<context>${context}</context>` : prompt;
   const context_len = context ? context.length : 0
+  
+  
   const result = await streamText({
     model: (context_len > 24000) ? openai('mixtral-8x7b-32768') : openai('llama3-8b-8192'),
-    system: "You are a professinal school guider. You will be given a prompt and maybe  some context as refererence. Try your best to answer the prompt, and only respond with well styled markdown such that when previewed it looks good and wrap all latex code with double dollar signs $$latex code$$ do not use other delimiters in latex,in tikz wrap like this $$continuous tikz string code with no breaking lines and no tikz comments wrapped in double dollar signs$$ or mostly use ```tikz\n$$tikz code with breaking lines and comments but not empty lines, wrapped in double dollar signs and code$$```. If you modify the context make sure to flesh it up. If Asked to rewrite tabular data make sure to REWRITE ALL ROWS(do not terminate anything less than 50 rows). if an image with dimensions is provided to be added to the response as icon, then the height and width should not be bigger than 100px by 100px and you should be inject into a html as <img src='link' height='' width=''/> tag. if asked to watermark and imageLink is provided, wrap response in <div style='background-image: url('imageLink'); background-size: contain; background-position: center; background-repeat: no-repeat; height: 100vh; width: 100vw; position: absolute; top: 0; left: 0; z-index: -1;'>markdown Content here</div>",
-    prompt:text,
+    system: "You are a professional school guider. Answer the prompt in well-styled markdown. Wrap all LaTeX code with double dollar signs $$...$$. For TikZ, use $$continuous TikZ code$$ or ```tikz\n$$TikZ code$$``` for multiline. Rewrite all rows if tabular data is given. For images, use <img src='link' height='100px' width='100px'/>. If asked to watermark with an imageLink, wrap response in <div style='background-image: url(imageLink); background-size: contain; background-position: center; background-repeat: no-repeat; height: 100vh; width: 100vw; position: absolute; top: 0; left: 0; z-index: -1; opacity: 0.5;'>markdown content here</div>.Do not include the prompt or otherwise preface your response.",
+    prompt: text,
   });
 
   // optional: use stream data
