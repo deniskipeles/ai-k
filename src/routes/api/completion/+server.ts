@@ -41,12 +41,13 @@ export const POST = (async ({ request }) => {
 		}
 	}
   // Extract the `prompt` from the body of the request
-  const { prompt,context } = await request.json();
+  const { prompt,context,systemPrompt } = await request.json();
 
   // Ask OpenAI for a streaming chat completion given the prompt
   const text= (context && context.length>0) ? `<prompt>${prompt}</prompt>\n<context>${context}</context>` : prompt;
   const result = await streamText({
     model: openai('llama3-8b-8192'),
+    system:""+(systemPrompt?`<others>${systemPrompt}</others>`:""),
     prompt:text,
   });
 

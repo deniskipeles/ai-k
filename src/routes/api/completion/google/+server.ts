@@ -40,12 +40,12 @@ export const POST = (async ({ request }) => {
   const response = await genAI
     .getGenerativeModel({ model: 'gemini-pro' })
     .generateContentStream({
-      contents: [{ role: 'user', parts: [{ text }] }],
+      contents: [
+        { role: 'user', parts: [{ text }] }
+      ],
     });
-
   // Convert the response into a friendly text-stream
   const stream = GoogleGenerativeAIStream(response);
-
   // Respond with the stream
   return new StreamingTextResponse(stream);
 }) satisfies RequestHandler;
