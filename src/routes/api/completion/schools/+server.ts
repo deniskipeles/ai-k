@@ -44,15 +44,17 @@ export const POST = (async ({ request }) => {
 
     // Extract the `prompt`, `context`, and `systemPrompt` from the body of the request
     const { prompt, context, systemPrompt } = await request.json();
+    
+    const system = `You are a professional school guider. Answer the prompt in well-styled markdown. Wrap all LaTeX code with double dollar signs $$...$$. For TikZ, use $$continuous TikZ code$$ or \`\`\`tikz\n$$TikZ code$$\`\`\` for multiline. Rewrite all rows if tabular data is given. For images, use <img src='link' height='100px' width='100px'/>. If asked to watermark with an imageLink, wrap response in <div style='background-image:url(imageLink);background-size:contain;background-position:center;background-repeat:no-repeat;height:100vh;width:100vw;position:absolute;top:0;left:0;z-index:-1;opacity:0.5;'>markdown content here</div>.Do not include the prompt or otherwise preface your response.<others>${systemPrompt}</others>`
 
     // Construct the text based on the context
     const text = (context && context.length > 0) ? `<prompt>${prompt}</prompt>\n<context>${context}</context>` : prompt;
-    const context_len = context&&systemPrompt ? (context+systemPrompt).length : (context ? context.length :(systemPrompt ? systemPrompt.length : 0));
+    const context_len = context+systemPrompt;
 
-    if (context_len < 16000) {
+    if (context_len.length < 16000) {
       const result = await streamText({
         model: openai('mixtral-8x7b-32768'),
-        system: `You are a professional school guider. Answer the prompt in well-styled markdown. Wrap all LaTeX code with double dollar signs $$...$$. For TikZ, use $$continuous TikZ code$$ or \`\`\`tikz\n$$TikZ code$$\`\`\` for multiline. Rewrite all rows if tabular data is given. For images, use <img src='link' height='100px' width='100px'/>. If asked to watermark with an imageLink, wrap response in <div style='background-image:url(imageLink);background-size:contain;background-position:center;background-repeat:no-repeat;height:100vh;width:100vw;position:absolute;top:0;left:0;z-index:-1;opacity:0.5;'>markdown content here</div>.Do not include the prompt or otherwise preface your response.` + (systemPrompt ? `<others>${systemPrompt}</others>` : ""),
+        system: system,
         prompt: text,
       });
 
@@ -70,11 +72,12 @@ export const POST = (async ({ request }) => {
       // Respond with the stream
       return new StreamingTextResponse(stream, {}, data);
     } else {
+      const googleText=`${text}<ai-instructions>${system}</ai-instructions>`
       const response = await genAI
         .getGenerativeModel({ model: 'gemini-pro' })
         .generateContentStream({
           contents: [
-            { role: 'user', parts: [{ text }] }
+            { role: 'user', parts: [{ text:googleText }] }
           ],
         });
 
