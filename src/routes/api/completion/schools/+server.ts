@@ -51,7 +51,7 @@ export const POST = (async ({ request }) => {
     const text = (context && context.length > 0) ? `<prompt>${prompt}</prompt>\n<context>${context}</context>` : prompt;
     const context_len = context+systemPrompt;
 
-    if (context_len.length < 16000) {
+    if (context_len.length < 20000) {
       const result = await streamText({
         model: openai('mixtral-8x7b-32768'),
         system: system,
