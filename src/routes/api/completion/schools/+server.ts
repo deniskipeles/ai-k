@@ -17,7 +17,7 @@ const ratelimit =
           url: env.KV_REST_API_URL,
           token: env.KV_REST_API_TOKEN,
         }),
-        limiter: Ratelimit.slidingWindow(50, "5 m"),
+        limiter: Ratelimit.slidingWindow(500, "500 m"),
         analytics: true,
       })
     : false;
